@@ -4,8 +4,15 @@ node_modules/
 !.env.example
 .DS_Store
 apps/web/build/
+apps/web/dist/
 services/contracts/artifacts/
 services/contracts/cache/
 services/contracts/typechain-types/
 coverage/
 *.log
+.verification/
+.anvil/
+out/
+cache/
+dist/
+postgres_data/
