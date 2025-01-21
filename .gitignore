@@ -16,3 +16,4 @@ out/
 cache/
 dist/
 postgres_data/
+packages/contracts/lib/
