@@ -28,7 +28,7 @@
 | 7. Indexer Reorgs | 100 restart/interruption cases + 100 EVM reorg cases with projection parity | Pending | `services/indexer` |
 | 8. Scale Benchmark | Ingestion and projection of >= 100,000 emitted logs with idempotent restarts | Pending | Indexer benchmark |
 | 9. Product Integration | Full local lifecycle: terms, fund, submit, dispute, quorum, fallback, withdraw, rating | Pending | `apps/web` + Playwright/E2E |
-| 10. Substantive LOC | Target 12,000 - 17,000 substantive production lines across real protocol & product modules | In Progress (1,806 LOC) | `scripts/census.py` -> `.verification/census.json` |
+| 10. Substantive LOC | Target 12,000 - 17,000 substantive production lines across real protocol & product modules | In Progress (5,073 LOC) | `scripts/census.py` -> `.verification/census.json` |
 
 ## 3. Work Breakdown & Current Execution
 
@@ -36,7 +36,7 @@
 - [x] Phase 1: Repository workspace setup, reproducible LOC census, root Makefile.
 - [x] Phase 2: Protocol smart contracts (`packages/contracts`) with Foundry & Hardhat support.
 - [x] Phase 3: Independent protocol reference model (`packages/protocol-model`) and differential harness.
-- [ ] Phase 4: Typed protocol SDK (`packages/sdk`).
+- [x] Phase 4: Typed protocol SDK (`packages/sdk`).
 - [ ] Phase 5: PostgreSQL reorg-aware indexer (`services/indexer`).
 - [ ] Phase 6: Protocol Read API service (`services/api`).
 - [ ] Phase 7: Modern React + Vite + TypeScript web application (`apps/web`).
