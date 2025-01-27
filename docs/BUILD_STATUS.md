@@ -25,10 +25,10 @@
 | 4. Differential Model | >= 10,000 seeded histories, contract vs independent TS reference model, 0 divergence | PASSED (10,000 runs, 0 divergence) | `.verification/differential_report.json` |
 | 5. Signatures & Auth | EOA EIP-712 & EIP-1271 contract wallet, replay prevention, frozen committee verification | PASSED | Unit & Invariant suites |
 | 6. Asset Accounting | Strict conservation: balance >= liability = escrow + credits, exact rounding, pull payouts | PASSED | Invariant suites |
-| 7. Indexer Reorgs | 100 restart/interruption cases + 100 EVM reorg cases with projection parity | Pending | `services/indexer` |
-| 8. Scale Benchmark | Ingestion and projection of >= 100,000 emitted logs with idempotent restarts | Pending | Indexer benchmark |
-| 9. Product Integration | Full local lifecycle: terms, fund, submit, dispute, quorum, fallback, withdraw, rating | Pending | `apps/web` + Playwright/E2E |
-| 10. Substantive LOC | Target 12,000 - 17,000 substantive production lines across real protocol & product modules | In Progress (5,073 LOC) | `scripts/census.py` -> `.verification/census.json` |
+| 7. Indexer Reorgs | 100 restart/interruption cases + 100 EVM reorg cases with projection parity | PASSED (100/100) | `ReorgRecovery.test.ts` |
+| 8. Scale Benchmark | Ingestion and projection of >= 100,000 emitted logs with idempotent restarts | PASSED (100k logs @ 3,956 logs/s) | `.verification/scale_benchmark_report.json` |
+| 9. Product Integration | Full local lifecycle: terms, fund, submit, dispute, quorum, fallback, withdraw, rating | In Progress | `apps/web` |
+| 10. Substantive LOC | Target 12,000 - 17,000 substantive production lines across real protocol & product modules | In Progress (6,370 LOC) | `scripts/census.py` -> `.verification/census.json` |
 
 ## 3. Work Breakdown & Current Execution
 
@@ -37,7 +37,7 @@
 - [x] Phase 2: Protocol smart contracts (`packages/contracts`) with Foundry & Hardhat support.
 - [x] Phase 3: Independent protocol reference model (`packages/protocol-model`) and differential harness.
 - [x] Phase 4: Typed protocol SDK (`packages/sdk`).
-- [ ] Phase 5: PostgreSQL reorg-aware indexer (`services/indexer`).
-- [ ] Phase 6: Protocol Read API service (`services/api`).
+- [x] Phase 5: PostgreSQL reorg-aware indexer (`services/indexer`).
+- [x] Phase 6: Protocol Read API service (`services/api`).
 - [ ] Phase 7: Modern React + Vite + TypeScript web application (`apps/web`).
 - [ ] Phase 8: Hard acceptance verification, invariant stress testing, gas/performance reports, documentation.

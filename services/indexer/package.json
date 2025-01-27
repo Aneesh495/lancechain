@@ -1,0 +1,24 @@
+{
+  "name": "@lancechain/indexer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reorg-aware transactional blockchain indexer and projection engine for Lancechain",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "test": "node --test dist/test/**/*.test.js"
+  },
+  "dependencies": {
+    "@lancechain/sdk": "*",
+    "ethers": "^6.13.2",
+    "pg": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.6.2"
+  }
+}
