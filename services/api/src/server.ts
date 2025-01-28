@@ -9,6 +9,8 @@ import { createReputationRouter } from "./routes/reputation.js";
 import { createLiabilitiesRouter } from "./routes/liabilities.js";
 import { createReconciliationRouter } from "./routes/reconciliation.js";
 import { createEventsRouter } from "./routes/events.js";
+import { createAnalyticsRouter } from "./routes/analytics.js";
+import { createExportRouter } from "./routes/export.js";
 
 export interface ApiServerOptions {
   db: Database;
@@ -29,6 +31,8 @@ export function createApiServer(options: ApiServerOptions): Express {
   app.use("/api/reputation", createReputationRouter(options.db));
   app.use("/api/liabilities", createLiabilitiesRouter(options.db));
   app.use("/api/events", createEventsRouter(options.db));
+  app.use("/api/analytics", createAnalyticsRouter(options.db));
+  app.use("/api/export", createExportRouter(options.db));
 
   if (options.reconciliationEngine) {
     app.use("/api/reconcile", createReconciliationRouter(options.reconciliationEngine, options.chainId ?? 31337));

@@ -5,4 +5,7 @@ export * from "./builders/TermsBuilder.js";
 export * from "./signatures/SignerHelpers.js";
 export * from "./events/EventDecoder.js";
 export * from "./client/LancechainClient.js";
+export * from "./batch/BatchOperations.js";
+export * from "./simulation/SimulationEngine.js";
+export * from "./invariants/InvariantValidator.js";
 export * from "./abi/index.js";
