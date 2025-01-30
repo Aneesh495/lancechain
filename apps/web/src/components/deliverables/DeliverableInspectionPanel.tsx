@@ -30,7 +30,7 @@ export const DeliverableInspectionPanel: React.FC<DeliverableInspectionPanelProp
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={`Deliverable Review — Phase #${milestone.milestoneId + 1}`}
+      title={`Deliverable Review: Phase #${milestone.milestoneId + 1}`}
       subtitle={`Submitted by ${truncateAddress(deliverable.submittedBy)}`}
       maxWidth="lg"
     >

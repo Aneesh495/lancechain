@@ -73,7 +73,7 @@ export const ArbitrationConsole: React.FC<ArbitrationConsoleProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Arbitration Court — Binding Award Verdict"
+      title="Arbitration Court: Binding Award Verdict"
       subtitle={`Resolving Milestone #${milestone.milestoneId + 1} (${formatTokenAmount(milestone.amount, tokenDecimals)} ${tokenSymbol})`}
       maxWidth="lg"
     >

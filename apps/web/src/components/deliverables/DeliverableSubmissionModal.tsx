@@ -94,7 +94,7 @@ export const DeliverableSubmissionModal: React.FC<DeliverableSubmissionModalProp
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={`Submit Deliverable — Milestone #${milestoneId + 1}`}
+      title={`Submit Deliverable: Milestone #${milestoneId + 1}`}
       subtitle="Provide cryptographic proof of completion and review deliverables"
       maxWidth="lg"
     >

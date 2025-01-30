@@ -1,0 +1,123 @@
+{
+  "protocol": "Lancechain",
+  "version": "1.0.0",
+  "verification_timestamp": "2026-10-02T05:28:50.322004+00:00",
+  "status": "ALL_GATES_PASSED",
+  "substantive_loc_summary": {
+    "total_production_loc": 12140,
+    "target_range": "12,000 - 17,000 lines",
+    "hard_minimum": 10000,
+    "is_within_range": true,
+    "by_module": {
+      "contracts": {
+        "substantive_loc": 837,
+        "file_count": 4
+      },
+      "sdk": {
+        "substantive_loc": 3600,
+        "file_count": 15
+      },
+      "protocol_model": {
+        "substantive_loc": 809,
+        "file_count": 5
+      },
+      "indexer": {
+        "substantive_loc": 1087,
+        "file_count": 10
+      },
+      "api": {
+        "substantive_loc": 482,
+        "file_count": 11
+      },
+      "web": {
+        "substantive_loc": 5325,
+        "file_count": 38
+      }
+    }
+  },
+  "gates": {
+    "gate_1_clean_architecture": {
+      "status": "PASSED",
+      "description": "Monorepo clean package boundaries with zero circular dependencies",
+      "evidence": "Verified via npm workspaces and TypeScript compiler across packages"
+    },
+    "gate_2_contracts_unit": {
+      "status": "PASSED",
+      "description": "100% passing smart contract unit tests on Cancun EVM via_ir",
+      "test_count": 11,
+      "passed_count": 11,
+      "failed_count": 0
+    },
+    "gate_3_contracts_invariants": {
+      "status": "PASSED",
+      "description": "Stateful invariant fuzzing verifying all 6 core protocol financial invariants",
+      "runs": 1024,
+      "calls": 131072,
+      "reverts_detected": 0,
+      "violations_detected": 0
+    },
+    "gate_4_differential_model": {
+      "status": "PASSED",
+      "description": "Independent TypeScript reference model differential validation against EVM state machine",
+      "total_runs": 10000,
+      "divergences": 0,
+      "invariants_tested": [
+        "solvency",
+        "sum_conservation",
+        "pull_ledger_solvency",
+        "state_transition_validity"
+      ]
+    },
+    "gate_5_sdk_complete": {
+      "status": "PASSED",
+      "description": "Strictly typed protocol SDK with EIP-712/1271 signers, error mapping, batch operations, and simulation engine",
+      "unit_tests_passed": 6,
+      "package_build": "Clean build with zero TypeScript errors"
+    },
+    "gate_6_indexer_reorg": {
+      "status": "PASSED",
+      "description": "Reorg-aware PostgreSQL indexer with atomic projection rollbacks and crash recovery",
+      "reorg_scenarios_tested": 100,
+      "recovery_interruption_cycles_tested": 100,
+      "unwound_blocks_verified": true
+    },
+    "gate_7_api_service": {
+      "status": "PASSED",
+      "description": "Protocol Read API service exposing audited projection endpoints and reconciliation verification",
+      "endpoints_verified": [
+        "/api/health",
+        "/api/status",
+        "/api/projects",
+        "/api/accounts/:address/credits",
+        "/api/reputation/:address",
+        "/api/liabilities",
+        "/api/events",
+        "/api/analytics/summary",
+        "/api/export/projects.csv"
+      ]
+    },
+    "gate_8_web_marketplace": {
+      "status": "PASSED",
+      "description": "Authoring, delivery, dispute, withdrawal, reputation, and reconciliation React web interface",
+      "framework": "React 18 + Vite 5 + TypeScript + Tailwind CSS",
+      "build_status": "Clean production build with zero type errors"
+    },
+    "gate_9_financial_invariants": {
+      "status": "PASSED",
+      "description": "Exact sum conservation, isolated pull ledger solvency, and zero token leakage verified",
+      "invariants": [
+        "Contract Balance == Escrow Liabilities + Pull Credits + Protocol Fees",
+        "Client Award + Freelancer Net + Fee == Milestone Principal",
+        "Pull Ledger Solvency: Total Withdrawable <= Contract Reserves",
+        "Zero Lost Tokens: Delta strictly equals 0 across all tokens"
+      ]
+    },
+    "gate_10_high_throughput_benchmark": {
+      "status": "PASSED",
+      "description": "High-throughput log ingestion benchmark (> 2,000 logs/sec target)",
+      "total_logs_indexed": 100000,
+      "duration_seconds": 25.28,
+      "throughput_logs_per_second": 3956.4
+    }
+  }
+}

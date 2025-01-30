@@ -71,7 +71,7 @@ export const DisputeFilingModal: React.FC<DisputeFilingModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={`Escalate Dispute — Milestone #${milestoneId + 1}`}
+      title={`Escalate Dispute: Milestone #${milestoneId + 1}`}
       subtitle="Authorized arbitrator will inspect evidence and make binding distribution"
       maxWidth="md"
     >

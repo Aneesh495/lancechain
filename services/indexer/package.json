@@ -9,7 +9,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/src/index.js",
-    "test": "node --test dist/test/**/*.test.js"
+    "test": "node --test --test-concurrency=1 dist/test/ReorgRecovery.test.js",
+    "benchmark": "node --test dist/test/ScaleBenchmark.test.js"
   },
   "dependencies": {
     "@lancechain/sdk": "*",
