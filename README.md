@@ -1,43 +1,49 @@
 # Lancechain
 
-Ethereum freelance marketplace: Hardhat smart contracts and a React wallet UI.
-Escrow-style payments, reputation tracking, and dispute voting live under
-`services/contracts/`; the dapp shell is in `apps/web/`.
+On-chain escrow for freelance work: Hardhat contracts under `services/contracts`,
+wallet console under `apps/web`.
 
 ## Architecture
 
 ```mermaid
-flowchart TB
-  Wallet[Browser wallet] --> Web[apps/web React]
-  Web -->|JSON-RPC| Chain[EVM network]
-  Web --> Contracts[services/contracts Solidity]
-  Contracts --> Chain
-  subgraph onchain [On-chain modules]
-    DAO[FreelanceDAO]
-    Rep[ReputationTracker]
-    Vote[DisputeResolution]
-  end
-  Contracts --> onchain
+flowchart LR
+  Wallet[Injected wallet] --> Web[apps/web]
+  Web -->|ethers.js| RPC[JSON-RPC]
+  Contracts[FreelanceDAO + dispute modules] --> RPC
 ```
 
-## Setup
+## Contracts
 
 ```bash
-cd services/contracts && npm install
-npx hardhat compile && npx hardhat test
-
-cd ../../apps/web && npm install && npm start
+cd services/contracts
+npm install
+npx hardhat compile
+npx hardhat test
+npx hardhat node
+# separate terminal
+npx hardhat run scripts/deploy.js --network localhost
 ```
 
-Deploy with Hardhat, then update contract addresses in the web client config.
+Set the printed address in `apps/web/.env` as `REACT_APP_FREELANCE_DAO_ADDRESS`.
+
+## Web console
+
+```bash
+cd apps/web
+cp .env.example .env
+npm install
+npm start
+```
+
+Minimal flows: connect wallet, create funded project, mark complete, release escrow.
 
 ## Layout
 
 | Path | Role |
 | --- | --- |
-| `services/contracts/contracts/` | Core protocol contracts |
-| `services/contracts/DisputeVoting/` | Voting and reputation helpers |
-| `apps/web/` | Project flows and MetaMask integration |
+| `services/contracts/contracts/` | Protocol sources |
+| `services/contracts/test/` | Hardhat tests |
+| `apps/web/` | Operator console |
 
 ## License
 

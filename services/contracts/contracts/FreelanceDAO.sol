@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.27;
 
 
 
@@ -43,7 +43,9 @@ contract FreelanceDAO {
         Project storage project = projects[projectId];
         require(msg.sender == project.client, "Only the client can confirm completion");
         require(project.isCompleted, "Project not marked as completed");
-        payable(project.freelancer).transfer(project.amount);
+        (bool ok, ) = payable(project.freelancer).call{value: project.amount}("");
+        require(ok, "payout failed");
+        project.amount = 0;
     }
 
     function raiseDispute(uint256 projectId) public {
@@ -57,12 +59,11 @@ contract FreelanceDAO {
         Project storage project = projects[projectId];
         require(project.isDisputed, "No dispute for this project");
 
-        if (voteForFreelancer) {
-            payable(project.freelancer).transfer(project.amount);
-        } else {
-            payable(project.client).transfer(project.amount);
-        }
-
+        address payee = voteForFreelancer ? project.freelancer : project.client;
+        uint256 amount = project.amount;
+        project.amount = 0;
         project.isDisputed = false;
+        (bool ok, ) = payable(payee).call{value: amount}("");
+        require(ok, "payout failed");
     }
 }
