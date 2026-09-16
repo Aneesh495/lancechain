@@ -1,30 +1,47 @@
 # Lancechain
 
-On-chain escrow for freelance work: Hardhat contracts under `services/contracts`,
-wallet console under `apps/web`.
+On-chain escrow for freelance-style projects: Solidity 0.8.27 under Hardhat, plus a wallet-connected operator console (ethers v6). Funds sit in the contract until the client confirms completion.
+
+## Protocol (FreelanceDAO)
+
+| Function | Actor | Effect |
+| --- | --- | --- |
+| `createProject(freelancer)` | Client | `payable`; locks `msg.value` in project slot |
+| `markAsCompleted(id)` | Freelancer | Sets completion flag |
+| `confirmCompletion(id)` | Client | Releases escrow via `call{value}` |
+| `raiseDispute` / `resolveDispute` | Parties | Dispute path (see `contracts/dispute/`) |
+
+Payouts use low-level `call` with balance zeroing to avoid stale `transfer` semantics. Unit tests cover create, release, and authorization failures.
 
 ## Architecture
 
 ```mermaid
-flowchart LR
-  Wallet[Injected wallet] --> Web[apps/web]
-  Web -->|ethers.js| RPC[JSON-RPC]
-  Contracts[FreelanceDAO + dispute modules] --> RPC
+flowchart TB
+  subgraph chain [EVM]
+    DAO[FreelanceDAO.sol]
+    DIS[dispute/*.sol]
+  end
+  Web[apps/web React] -->|JSON-RPC| RPC[Hardhat / wallet RPC]
+  Web -->|Contract ABI| DAO
+  DAO --- DIS
 ```
 
-## Contracts
+## Contracts workspace
 
 ```bash
 cd services/contracts
 npm install
-npx hardhat compile
-npx hardhat test
+npx hardhat compile    # compiles contracts/ + contracts/dispute/
+npx hardhat test       # FreelanceDAO.js (3 cases)
 npx hardhat node
-# separate terminal
+# deploy
 npx hardhat run scripts/deploy.js --network localhost
 ```
 
-Set the printed address in `apps/web/.env` as `REACT_APP_FREELANCE_DAO_ADDRESS`.
+Solidity layout:
+
+- `contracts/FreelanceDAO.sol` - escrow state machine
+- `contracts/dispute/` - `DisputeResolution`, `VotingMechanism`, `ReputationTracker`
 
 ## Web console
 
@@ -35,15 +52,15 @@ npm install
 npm start
 ```
 
-Minimal flows: connect wallet, create funded project, mark complete, release escrow.
+Set `REACT_APP_FREELANCE_DAO_ADDRESS` from deploy output. Console supports connect wallet, fund project, mark complete, read chain state, release escrow.
 
-## Layout
+Production build: `npm run build` (CI job on `main`).
 
-| Path | Role |
-| --- | --- |
-| `services/contracts/contracts/` | Protocol sources |
-| `services/contracts/test/` | Hardhat tests |
-| `apps/web/` | Operator console |
+## Engineering notes
+
+- **Packages:** `@lancechain/contracts` (Hardhat), `@lancechain/web` (CRA + ethers)
+- **CI:** Hardhat compile + test; web production build
+- **Local chain:** default RPC `http://127.0.0.1:8545`, chain id `31337` in `.env.example`
 
 ## License
 
